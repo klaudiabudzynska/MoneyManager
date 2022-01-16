@@ -1,0 +1,28 @@
+﻿@model ExpenseModel
+<form method="POST" asp-action="Add">
+    <div class="form-group">
+        <label asp-for="Name">Nazwa</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ExpenseDate">Data</label>
+        <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker">
+            <input asp-for="ExpenseDate" type="date" id="example" class="form-control">
+            <i class="fas fa-calendar input-prefix" tabindex=0></i>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category">Kategoria</label>
+        <select asp-for="Category" class="form-control">
+            <option value="food">Jedzenie</option>
+            <option value="transport">Transport</option>
+            <option value="medications">Leki</option>
+            <option value="apartment">Mieszkanie</option>
+            <option value="entertainment">Rozrywka</option>
+            <option value="others">Inne</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Dodaj" />
+    </div>
+</form>
