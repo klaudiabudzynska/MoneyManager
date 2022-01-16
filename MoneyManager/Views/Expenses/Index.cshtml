@@ -1,28 +1,29 @@
-﻿@model ExpenseModel
-<form method="POST" asp-action="Add">
-    <div class="form-group">
-        <label asp-for="Name">Nazwa</label>
-        <input asp-for="Name" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="ExpenseDate">Data</label>
-        <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker">
-            <input asp-for="ExpenseDate" type="date" id="example" class="form-control">
-            <i class="fas fa-calendar input-prefix" tabindex=0></i>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Category">Kategoria</label>
-        <select asp-for="Category" class="form-control">
-            <option value="food">Jedzenie</option>
-            <option value="transport">Transport</option>
-            <option value="medications">Leki</option>
-            <option value="apartment">Mieszkanie</option>
-            <option value="entertainment">Rozrywka</option>
-            <option value="others">Inne</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Dodaj" />
-    </div>
+﻿@model IEnumerable<MoneyManager.Entities.ExpenseEntity>
+<h2>Lista wydatków</h2>
+
+<form method="GET" class="form-inline mb-2">
+    <input type="text" name="name" placeholder="Filtruj po nazwie" class="form-control" />
+    <button type="submit" class="btn btn-primary ml-2">Szukaj</button>
 </form>
+
+<a class="btn btn-primary" asp-area="" asp-controller="Expenses" asp-action="Add">Dodaj wydatek</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Data</th>
+            <th>Kategoria</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name </td>
+                <td>@item.ExpenseDate</td>
+                <td>@item.Category</td>
+            </tr>
+        }
+    </tbody>
+</table>

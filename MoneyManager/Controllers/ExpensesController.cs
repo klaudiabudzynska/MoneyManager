@@ -19,7 +19,7 @@ namespace MoneyManager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ExpenseModel expense)
+        public async Task<IActionResult> Index(ExpenseModel expense)
         {
             var entity = new ExpenseEntity
             {
@@ -30,19 +30,37 @@ namespace MoneyManager.Controllers
 
             await _dbContext.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
-            return View();
+
+            var expenses = await FilterExpenses("");
+            return View(expenses);
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> Index(string name)
         {
-            var products = await _dbContext.Expenses.ToListAsync();
-            return View(products);
+            var expenses = await FilterExpenses(name);
+            return View(expenses);
+        }
+
+
+        public IActionResult Add()
+        {
+            return View();
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        private async Task<List<ExpenseEntity>> FilterExpenses(string name)
+        {
+            IQueryable<ExpenseEntity> expensesQuery = _dbContext.Expenses;
+            if (!string.IsNullOrEmpty(name))
+            {
+                expensesQuery = expensesQuery.Where(x => x.Name.Contains(name));
+            }
+            return await expensesQuery.ToListAsync();
         }
     }
 }
