@@ -8,6 +8,7 @@ namespace MoneyManager.Models
     public class ExpenseModel
     {
         public string Name { get; set; }
+        public string Amount { get; set; }
         public DateTime ExpenseDate { get; set; }
         public string Category { get; set; }
     }

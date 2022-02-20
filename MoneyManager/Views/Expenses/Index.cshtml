@@ -12,8 +12,10 @@
     <thead>
         <tr>
             <th>Nazwa</th>
+            <th>Cena</th>
             <th>Data</th>
             <th>Kategoria</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -21,8 +23,13 @@
         {
             <tr>
                 <td>@item.Name </td>
+                <td>@item.Amount zł</td>
                 <td>@item.ExpenseDate</td>
                 <td>@item.Category</td>
+                <td>
+                    <a class="btn btn-default" asp-controller="Expenses" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>
+                    <a class="btn btn-danger" asp-controller="Expenses" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                </td>
             </tr>
         }
     </tbody>
