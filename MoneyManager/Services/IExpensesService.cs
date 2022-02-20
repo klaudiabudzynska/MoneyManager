@@ -1,4 +1,5 @@
-﻿using MoneyManager.Models;
+﻿using MoneyManager.Entities;
+using MoneyManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace MoneyManager.Services
         public Task AddAsync(ExpenseModel expense);
         public Task DeleteAsync(int id);
         public Task Edit(ExpenseModel expense);
+        public Task<IEnumerable<ExpenseEntity>> GetAll(string name);
     }
 }

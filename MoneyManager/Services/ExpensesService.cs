@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MoneyManager.Database;
 using MoneyManager.Entities;
 using MoneyManager.Models;
@@ -12,20 +14,29 @@ namespace MoneyManager.Services
     public class ExpensesService : IExpensesService
     {
         private readonly AppDbContext _dbContext;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ExpensesService(AppDbContext context)
+
+        public ExpensesService(AppDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = context;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
         public async Task AddAsync(ExpenseModel expense)
         {
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
             var entity = new ExpenseEntity
             {
                 Name = expense.Name,
                 Amount = Int32.Parse(expense.Amount),
                 ExpenseDate = expense.ExpenseDate,
                 Category = expense.Category,
+                Owner = currentUser,
             };
 
             await _dbContext.Expenses.AddAsync(entity);
@@ -51,6 +62,22 @@ namespace MoneyManager.Services
 
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<ExpenseEntity>> GetAll(string name)
+        {
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+            IQueryable<ExpenseEntity> expensesQuery = _dbContext.Expenses;
+
+            expensesQuery = expensesQuery.Where(x => x.Owner == currentUser);
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                expensesQuery = expensesQuery.Where(x => x.Name.Contains(name));
+            }
+
+            return await expensesQuery.ToListAsync();
         }
     }
 }

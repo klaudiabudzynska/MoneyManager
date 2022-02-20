@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyManager.Database;
 using MoneyManager.Entities;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace MoneyManager.Controllers
 {
+    [Authorize]
     public class IncomeController : Controller
     {
         private readonly AppDbContext _dbContext;
@@ -40,7 +42,7 @@ namespace MoneyManager.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string name)
         {
-            List<IncomeEntity> income = await FilterIncome(name);
+            IEnumerable<IncomeEntity> income = await _service.GetAll(name);
             return View(income);
         }
 
@@ -68,16 +70,6 @@ namespace MoneyManager.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        private async Task<List<IncomeEntity>> FilterIncome(string name)
-        {
-            IQueryable<IncomeEntity> incomeQuery = _dbContext.Income;
-            if (!string.IsNullOrEmpty(name))
-            {
-                incomeQuery = incomeQuery.Where(x => x.Name.Contains(name));
-            }
-            return await incomeQuery.ToListAsync();
         }
     }
 }

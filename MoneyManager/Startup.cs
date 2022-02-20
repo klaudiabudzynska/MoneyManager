@@ -1,16 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MoneyManager.Database;
 using MoneyManager.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MoneyManager
 {
@@ -27,9 +23,14 @@ namespace MoneyManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddDbContext<AppDbContext>(
              config => config.UseSqlServer(Configuration.GetConnectionString("Application"))
-            );            
+            );
+
+            services.AddDefaultIdentity<IdentityUser>()
+            .AddEntityFrameworkStores<AppDbContext>();
+
             services.AddScoped<IExpensesService, ExpensesService>();
             services.AddScoped<IIncomeService, IncomeService>();
         }
@@ -52,6 +53,7 @@ namespace MoneyManager
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -59,6 +61,7 @@ namespace MoneyManager
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

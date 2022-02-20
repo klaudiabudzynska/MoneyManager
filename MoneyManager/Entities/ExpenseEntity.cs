@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,6 +21,7 @@ namespace MoneyManager.Entities
             get => Categories[_category];
             set => _category = value;
         }
+        public IdentityUser Owner { get; set; }
 
         public ExpenseEntity ()
         {

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MoneyManager.Database;
 using MoneyManager.Entities;
 using MoneyManager.Models;
@@ -12,19 +14,27 @@ namespace MoneyManager.Services
     public class IncomeService : IIncomeService
     {
         private readonly AppDbContext _dbContext;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IncomeService(AppDbContext context)
+
+        public IncomeService(AppDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = context;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task AddAsync(IncomeModel income)
         {
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
             var entity = new IncomeEntity
             {
                 Name = income.Name,
                 Amount = Int32.Parse(income.Amount),
                 IncomeDate = income.IncomeDate,
+                Owner = currentUser,
             };
 
             await _dbContext.Income.AddAsync(entity);
@@ -49,6 +59,22 @@ namespace MoneyManager.Services
 
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<IncomeEntity>> GetAll(string name)
+        {
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+            IQueryable<IncomeEntity> incomeQuery = _dbContext.Income;
+
+            incomeQuery = incomeQuery.Where(x => x.Owner == currentUser);
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                incomeQuery = incomeQuery.Where(x => x.Name.Contains(name));
+            }
+
+            return await incomeQuery.ToListAsync();
         }
     }
 }
