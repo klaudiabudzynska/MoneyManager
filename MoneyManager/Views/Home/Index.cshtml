@@ -8,11 +8,11 @@
 <div class="text-center">
     @if (SignInManager.IsSignedIn(User))
     {
-        <h1>Witaj</h1>
-        <p>Zaloguj sie aby kontunuować</p>
+        <h1 class="display-4">Witaj ponownie</h1>
     }
     else
     {
-        <h1>Witaj Ponownie</h1>
+        <h1 class="display-4">Witaj</h1>
+        <p>Zaloguj się, aby kontynuować</p>
     }
 </div>

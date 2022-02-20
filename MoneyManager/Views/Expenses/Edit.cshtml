@@ -1,4 +1,9 @@
 ﻿@model MoneyManager.Entities.ExpenseEntity
+
+@{
+    ViewData["Title"] = "Edytuj";
+}
+
 <form method="POST" asp-action="Edit">
     <div class="form-group">
         <label asp-for="Name">Nazwa</label>
