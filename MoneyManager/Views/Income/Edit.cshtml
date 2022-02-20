@@ -16,7 +16,7 @@
     <div class="form-group">
         <label asp-for="IncomeDate">Data</label>
         <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker">
-            <input asp-for="IncomeDate" type="date" id="example" class="form-control" value="@Model.IncomeDate">
+            <input asp-for="IncomeDate" type="date" id="example" class="form-control" value="@Model.IncomeDate.ToString("yyyy/MM/dd")">
             <i class="fas fa-calendar input-prefix" tabindex=0></i>
         </div>
     </div>

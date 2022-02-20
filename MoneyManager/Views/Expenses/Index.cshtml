@@ -29,7 +29,7 @@
             <tr>
                 <td>@item.Name </td>
                 <td>@item.Amount zł</td>
-                <td>@item.ExpenseDate</td>
+                <td>@item.ExpenseDate.ToString("yyyy/MM/dd")</td>
                 <td>@item.Category</td>
                 <td>
                     <a class="btn btn-default" asp-controller="Expenses" asp-action="Edit" asp-route-id="@item.Id">Edytuj</a>

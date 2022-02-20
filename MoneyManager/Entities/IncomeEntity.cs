@@ -9,8 +9,8 @@ namespace MoneyManager.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Amount { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime IncomeDate { get; set; }
         public IdentityUser Owner { get; set; }
     }
