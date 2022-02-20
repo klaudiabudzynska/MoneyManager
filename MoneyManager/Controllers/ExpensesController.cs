@@ -26,16 +26,30 @@ namespace MoneyManager.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ExpenseModel expense)
         {
-            await _service.AddAsync(expense);
+            if (ModelState.IsValid)
+            {
+                await _service.AddAsync(expense);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            } 
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(ExpenseModel expense)
         {
-            await _service.Edit(expense);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                await _service.Edit(expense);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(expense);
+            }
         }
 
         [HttpGet]
@@ -54,6 +68,14 @@ namespace MoneyManager.Controllers
         {
             var expense = await _dbContext.Expenses.FirstOrDefaultAsync(e => e.Id == id);
             if (expense == null) return View("Error");
+
+            var entity = new ExpenseModel
+            {
+                Name = expense.Name,
+                Amount = expense.Amount.ToString(),
+                ExpenseDate = expense.ExpenseDate
+            };
+
             return View(expense);
         }
         public async Task<IActionResult> Delete(int id)

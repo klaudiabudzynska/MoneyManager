@@ -1,4 +1,4 @@
-﻿@model MoneyManager.Entities.IncomeEntity
+﻿@model IncomeModel
 
 @{
     ViewData["Title"] = "Edytuj";
@@ -8,10 +8,12 @@
     <div class="form-group">
         <label asp-for="Name">Nazwa</label>
         <input asp-for="Name" class="form-control" value="@Model.Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Amount">Kwota</label>
         <input asp-for="Amount" class="form-control" value="@Model.Amount" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="IncomeDate">Data</label>
@@ -19,6 +21,7 @@
             <input asp-for="IncomeDate" type="date" id="example" class="form-control" value="@Model.IncomeDate.ToString("yyyy/MM/dd")">
             <i class="fas fa-calendar input-prefix" tabindex=0></i>
         </div>
+        <span asp-validation-for="IncomeDate" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" class="btn btn-primary" value="Edytuj" />

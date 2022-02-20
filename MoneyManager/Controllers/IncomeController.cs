@@ -27,16 +27,30 @@ namespace MoneyManager.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(IncomeModel income)
         {
-            await _service.AddAsync(income);
+            if (ModelState.IsValid)
+            {
+                await _service.AddAsync(income);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            } 
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(IncomeModel income)
         {
-            await _service.Edit(income);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                await _service.Edit(income);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(income);
+            }
         }
 
         [HttpGet]
@@ -55,7 +69,15 @@ namespace MoneyManager.Controllers
         {
             var income = await _dbContext.Income.FirstOrDefaultAsync(e => e.Id == id);
             if (income == null) return View("Error");
-            return View(income);
+
+            var entity = new IncomeModel
+            {
+                Name = income.Name,
+                Amount = income.Amount.ToString(),
+                IncomeDate = income.IncomeDate
+            };
+
+            return View(entity);
         }
         public async Task<IActionResult> Delete(int id)
         {
