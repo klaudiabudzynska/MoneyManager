@@ -7,6 +7,7 @@ namespace MoneyManager.Models
 {
     public class ExpenseModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Amount { get; set; }
         public DateTime ExpenseDate { get; set; }

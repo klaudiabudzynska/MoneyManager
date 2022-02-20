@@ -39,18 +39,18 @@ namespace MoneyManager.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Edit(ExpenseModel expenseModel)
+        public async Task Edit(ExpenseModel expense)
         {
-            var entity = new ExpenseEntity
+            var dbExpense = await _dbContext.Expenses.FirstOrDefaultAsync(e => e.Id == expense.Id);
+            if (dbExpense != null)
             {
-                Name = expenseModel.Name,
-                Amount = Int32.Parse(expenseModel.Amount),
-                ExpenseDate = expenseModel.ExpenseDate,
-                Category = expenseModel.Category,
-            };
+                dbExpense.Name = expense.Name;
+                dbExpense.Amount = Int32.Parse(expense.Amount);
+                dbExpense.ExpenseDate = expense.ExpenseDate;
+                dbExpense.Category = expense.Category;
 
-            _dbContext.Update(entity);
-            await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }
