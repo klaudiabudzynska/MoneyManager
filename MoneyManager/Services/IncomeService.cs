@@ -32,7 +32,7 @@ namespace MoneyManager.Services
             var entity = new IncomeEntity
             {
                 Name = income.Name,
-                Amount = Int32.Parse(income.Amount),
+                Amount = decimal.Parse(income.Amount),
                 IncomeDate = income.IncomeDate,
                 Owner = currentUser,
             };
@@ -54,7 +54,7 @@ namespace MoneyManager.Services
             if (dbIncome != null)
             {
                 dbIncome.Name = income.Name;
-                dbIncome.Amount = Int32.Parse(income.Amount);
+                dbIncome.Amount = decimal.Parse(income.Amount);
                 dbIncome.IncomeDate = income.IncomeDate;
 
                 await _dbContext.SaveChangesAsync();

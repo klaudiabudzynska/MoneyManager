@@ -33,7 +33,7 @@ namespace MoneyManager.Services
             var entity = new ExpenseEntity
             {
                 Name = expense.Name,
-                Amount = Int32.Parse(expense.Amount),
+                Amount = decimal.Parse(expense.Amount),
                 ExpenseDate = expense.ExpenseDate,
                 Category = expense.Category,
                 Owner = currentUser,
@@ -56,7 +56,7 @@ namespace MoneyManager.Services
             if (dbExpense != null)
             {
                 dbExpense.Name = expense.Name;
-                dbExpense.Amount = Int32.Parse(expense.Amount);
+                dbExpense.Amount = decimal.Parse(expense.Amount);
                 dbExpense.ExpenseDate = expense.ExpenseDate;
                 dbExpense.Category = expense.Category;
 
