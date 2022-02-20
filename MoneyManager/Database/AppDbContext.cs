@@ -10,6 +10,7 @@ namespace MoneyManager.Database
     public class AppDbContext : DbContext
     {
         public DbSet<ExpenseEntity> Expenses { get; set; }
+        public DbSet<IncomeEntity> Income { get; set; }
         public AppDbContext(DbContextOptions options)
         : base(options)
         {

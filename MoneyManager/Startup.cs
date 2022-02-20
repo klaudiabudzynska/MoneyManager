@@ -31,6 +31,7 @@ namespace MoneyManager
              config => config.UseSqlServer(Configuration.GetConnectionString("Application"))
             );            
             services.AddScoped<IExpensesService, ExpensesService>();
+            services.AddScoped<IIncomeService, IncomeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

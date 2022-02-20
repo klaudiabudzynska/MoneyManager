@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MoneyManager.Services
 {
-    public interface IExpensesService
+    public interface IIncomeService
     {
-        public Task AddAsync(ExpenseModel expense);
+        public Task AddAsync(IncomeModel income);
         public Task DeleteAsync(int id);
-        public Task Edit(ExpenseModel expense);
+        public Task Edit(IncomeModel income);
     }
 }

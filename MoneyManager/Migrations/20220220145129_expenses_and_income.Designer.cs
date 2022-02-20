@@ -10,8 +10,8 @@ using MoneyManager.Database;
 namespace MoneyManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220116074100_wallet_migration")]
-    partial class wallet_migration
+    [Migration("20220220145129_expenses_and_income")]
+    partial class expenses_and_income
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,9 @@ namespace MoneyManager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
 
@@ -39,7 +42,28 @@ namespace MoneyManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("MoneyManager.Entities.IncomeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("IncomeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Income");
                 });
 #pragma warning restore 612, 618
         }
