@@ -29,7 +29,7 @@ Na podstronie możliwe jest filtrowanie rekordów po nazwie wydatku
 ### Przychody
 Podobnie jak w przypadku wydatków, użytkownik może zapisywać w aplikacji swoje przychody. Podawane są nazwa, kwota oraz data, również walidowane.
 
-![](doc/income.png)
+![](doc/income.PNG)
 
 Na podstronie możliwe jest filtrowanie rekordów po nazwie przychodu
 ![](doc/income-filter.png)
