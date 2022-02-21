@@ -1,4 +1,5 @@
 # MoneyManager
+Aplikacja do zarządzania swoim budżetem. Pozwala w prosty sposób zapisywać usuwać i edytować swoje wydatki na liście. 
 
 ## Potrzebne do uruchomienia
 * .net w wersji 5
